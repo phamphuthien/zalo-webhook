@@ -10,37 +10,39 @@ app.get("/", (req, res) => {
   res.send("Server running");
 });
 
-// webhook chính
-app.post("/webhook", async (req, res) => {
+// webhook chuẩn
+app.post("/webhook", (req, res) => {
   console.log("🔥 Received:", JSON.stringify(req.body, null, 2));
 
-  try {
-    const userId = req.body.sender?.id || "unknown";
-    const message = req.body.message?.text || "no text";
+  // ⚡ TRẢ OK NGAY (quan trọng nhất)
+  res.status(200).send("OK");
 
-    // gửi qua Google Sheet
-    const response = await fetch("https://script.google.com/macros/s/AKfycbxPcjDjUPWXXYZBA4TBFX28LUKy5E_5_snXyv59Ou0Gz_KHfDZPdiQmr69BobbVlV-2/exec", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({
-        user_id: userId,
-        message: message
-      })
-    });
+  // 👉 xử lý ngầm phía sau
+  (async () => {
+    try {
+      const userId = req.body.sender?.id || "unknown";
+      const message = req.body.message?.text || "no text";
 
-    const text = await response.text();
-    console.log("✅ GAS response:", text);
+      await fetch("https://script.google.com/macros/s/AKfycbxPcjDjUPWXXYZBA4TBFX28LUKy5E_5_snXyv59Ou0Gz_KHfDZPdiQmr69BobbVlV-2/exec", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          user_id: userId,
+          message: message
+        })
+      });
 
-  } catch (err) {
-    console.log("❌ GAS error:", err);
-  }
+      console.log("✅ Sent to Google Sheet");
 
-  res.send("OK");
+    } catch (err) {
+      console.log("❌ GAS error:", err);
+    }
+  })();
 });
 
-// chạy server (chuẩn Render)
+// chạy server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("🚀 Server running on port", PORT);
