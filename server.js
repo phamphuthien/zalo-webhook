@@ -19,7 +19,7 @@ app.post("/webhook", async (req, res) => {
     const message = req.body.message?.text || "no text";
 
     // gửi qua Google Sheet
-    const response = await fetch("https://script.google.com/macros/s/AKfycbymjEle-mW3Tdpf2i8W7C0PEkZJtLguSU8WAPawMrLKerno3jn0qYywTS54eXJj5ZAbSA/exec", {
+    const response = await fetch("https://script.google.com/macros/s/AKfycbxPcjDjUPWXXYZBA4TBFX28LUKy5E_5_snXyv59Ou0Gz_KHfDZPdiQmr69BobbVlV-2/exec", {
       method: "POST",
       headers: {
         "Content-Type": "application/json"
