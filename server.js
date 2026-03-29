@@ -23,7 +23,7 @@ app.post("/webhook", (req, res) => {
       const userId = req.body.sender?.id || "unknown";
       const message = req.body.message?.text || "no text";
 
-      await fetch("https://script.google.com/macros/s/AKfycbxPcjDjUPWXXYZBA4TBFX28LUKy5E_5_snXyv59Ou0Gz_KHfDZPdiQmr69BobbVlV-2/exec", {
+      await fetch("https://script.google.com/macros/s/AKfycbzrroUnSMF1biUIWXfw_GfasHlVf1ea60_qMi3VeKaZE4s25FzF5eaHaUK6VJDZZd89/exec", {
         method: "POST",
         headers: {
           "Content-Type": "application/json"
