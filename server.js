@@ -1,5 +1,4 @@
 const express = require("express");
-const fetch = require("node-fetch"); // nhớ cài: npm install node-fetch
 
 const app = express();
 
@@ -19,7 +18,7 @@ app.post("/webhook", async (req, res) => {
     const userId = req.body.sender?.id || "unknown";
     const message = req.body.message?.text || "no text";
 
-    // 👉 gửi qua Google Sheet
+    // gửi qua Google Sheet
     const response = await fetch("https://script.google.com/macros/s/AKfycbymjEle-mW3TdpFzi8W7C0pEkZJtLgsU8WAPawWrLKenno3jn0qYvwTS54eXJj5ZAbSA/exec", {
       method: "POST",
       headers: {
@@ -41,7 +40,7 @@ app.post("/webhook", async (req, res) => {
   res.send("OK");
 });
 
-// chạy server
+// chạy server (chuẩn Render)
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
   console.log("🚀 Server running on port", PORT);
